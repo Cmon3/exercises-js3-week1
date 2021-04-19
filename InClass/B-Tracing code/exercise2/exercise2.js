@@ -1,30 +1,27 @@
-function removeVowels(word) {
-  var characters = word.split("");
+const removeVowels = (word) => {
+  const characters = word.split("");
 
-  var result = [];
+  const result = [];
 
-  characters.forEach(function(character) {
+  characters.forEach((character) => {
     if (
-      character === "a" ||
-      character === "o" ||
-      character === "i" ||
-      character === "e" ||
-      character === "u"
+      character.toLowerCase() === "a" ||
+      character.toLowerCase() === "o" ||
+      character.toLowerCase() === "i" ||
+      character.toLowerCase() === "e" ||
+      character.toLowerCase() === "u"
     ) {
-      result.push(character);
-    } else {
       result.push("_");
+    } else {
+      result.push(character);
     }
   });
 
   return result.join("");
 }
 
-function removeVowelsForWords(words) {
-  var result = words.map(function(word) {
-    return removeVowels(word);
-  });
-
+const removeVowelsForWords = (words) => {
+  const result = words.map((word) => removeVowels(word));
   return result;
 }
 
@@ -33,7 +30,7 @@ function removeVowelsForWords(words) {
   Let's trace this piece of code - what is the value of result with this input
   */
   var result = removeVowels('samuel');
-
+  console.log("result: ", result);
 
 
 /*
@@ -41,4 +38,7 @@ function removeVowelsForWords(words) {
 	Trace what happens if we call the function removeVowelsForWords with this input: ["Irina", "Etza", "Daniel"]
     expected output?:
 */
+
+const input = ["Irina", "Etza", "Daniel"];
+console.log(removeVowelsForWords(input));
 
