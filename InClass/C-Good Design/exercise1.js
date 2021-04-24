@@ -39,34 +39,48 @@
    
    */
 
+//salary - tax calculator
+function calFinalSalary(salary, taxCode, incomeTax1, incomeTax2) {
+  let totalIncomeTax = incomeTax1 + incomeTax2;
+  let loanDebt = 17775;
+  const loanInterests = 0.09;
+  let studentLoan = (salary - loanDebt) * loanInterests;
+  let netSalary = salary;
+  let nationalInsurance = calculateInsu(salary, taxCode);
 
-function myFunction(salary, taxCode, incomeTax1, incomeTax2, ownsCar) {
-  var totalIncomeTax = incomeTax1 + incomeTax2;
-  var studentLoan = (salary - 17775) * 0.09;
-  var originalSalary = salary;
-  var nationalInsurance = null;
-
-  if (taxCode === "1150L") {
-    nationalInsurance = salary * 0.1;
-  } else if (taxCode === "ST") {
-    nationalInsurance = salary * 0.05;
-  } else {
-    nationalInsurance = salary * 0.08;
-  }
-
-  var deductions = [nationalInsurance, totalIncomeTax, studentLoan];
-
-  salary = salary - deductions[0];
+  let deductions = [nationalInsurance, totalIncomeTax, studentLoan];
+  deductions.forEach(e => netSalary -= e)
+  /*salary = salary - deductions[0];
   salary = salary - deductions[1];
-  salary = salary - deductions[2];
-
+  salary = salary - deductions[2];*/
   return (
-    "Your gross income is £" +
-    originalSalary.toString() +
-    " and your net income is £" +
+    "Your gross income is ï¿½ " +
     salary.toString() +
+    " and your net income is ï¿½ " +
+    netSalary.toString() +
     "."
   );
+  
 }
 
-console.log(myFunction(28000, "1150L", 1000, 580, false));
+
+//calculation of nationalInsurance
+function calculateInsu(salary, taxCode) {
+   switch(taxCode) {
+      case '1150L':
+            return salary * 0.1
+      case 'ST':
+            return salary * 0.05
+      default :
+            return salary * 0.08
+   }
+   /*if (taxCode === "1150L") {
+      nationalInsurance = salary * 0.1;
+    } else if (taxCode === "ST") {
+      nationalInsurance = salary * 0.05;
+    } else {
+      nationalInsurance = salary * 0.08;
+    }*/
+}
+
+console.log(calFinalSalary(28000, "1150L", 1000, 580));
