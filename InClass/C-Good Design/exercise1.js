@@ -40,16 +40,21 @@
    */
 
 //salary - tax calculator
-function calFinalSalary(salary, taxCode, incomeTax1, incomeTax2) {
+function calculateFinalSalary(salary, taxCode, incomeTax1, incomeTax2) {
+  const LOAN_DEBT = 17775;
+  const LOAN_INTEREST = 0.09;
   let totalIncomeTax = incomeTax1 + incomeTax2;
-  let loanDebt = 17775;
-  const loanInterests = 0.09;
-  let studentLoan = (salary - loanDebt) * loanInterests;
+  let studentLoan = (salary - LOAN_DEBT) * LOAN_INTEREST;
   let netSalary = salary;
-  let nationalInsurance = calculateInsu(salary, taxCode);
+  let nationalInsurance = calculateInsurance(salary, taxCode);
 
   let deductions = [nationalInsurance, totalIncomeTax, studentLoan];
   deductions.forEach(e => netSalary -= e)
+
+   // const reduced_deduction = [nationalInsurance, totalIncomeTax, studentLoan]
+   //    .reduce((acc, cur) => acc -= cur, netSalary)
+
+
   /*salary = salary - deductions[0];
   salary = salary - deductions[1];
   salary = salary - deductions[2];*/
@@ -60,20 +65,32 @@ function calFinalSalary(salary, taxCode, incomeTax1, incomeTax2) {
     netSalary.toString() +
     "."
   );
-  
+  //`Your gross income is ${salary} and your net income is ${netSalary}.` otra forma
 }
 
+const INSURANCE_RATES = {
+   '1150L': 0.1,
+   'ST': 0.05,
+   'DEFAULT': 0.08
+}
 
 //calculation of nationalInsurance
-function calculateInsu(salary, taxCode) {
-   switch(taxCode) {
-      case '1150L':
-            return salary * 0.1
-      case 'ST':
-            return salary * 0.05
-      default :
-            return salary * 0.08
+function calculateInsurance(salary, taxCode) {
+   if (taxCode in INSURANCE_RATES) {
+      return salary * INSURANCE_RATES[taxCode]
+   } else {
+      return salary * INSURANCE_RATES.DEFAULT
    }
+
+   // switch(taxCode) {
+   //    case '1150L':
+   //          return salary * 0.1
+   //    case 'ST':
+   //          return salary * 0.05
+   //    default :
+   //          return salary * 0.08
+   // }
+
    /*if (taxCode === "1150L") {
       nationalInsurance = salary * 0.1;
     } else if (taxCode === "ST") {
@@ -83,4 +100,4 @@ function calculateInsu(salary, taxCode) {
     }*/
 }
 
-console.log(calFinalSalary(28000, "1150L", 1000, 580));
+console.log(calculateFinalSalary(28000, "1150L", 1000, 580));
